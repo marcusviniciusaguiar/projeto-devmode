@@ -1,8 +1,11 @@
+import { useAuth } from "../contexts/AuthContext";
 import { useProjects } from "../contexts/ProjectContext";
 import React, { useState } from "react";
+import type { Project } from "../types/Project";
 
 function Dashboard() {
-    const { addProject } = useProjects();
+    const { addProject, projects, deleteProject } = useProjects();
+    const { user } = useAuth();
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [techs, setTechs] = useState("");
@@ -44,6 +47,28 @@ function Dashboard() {
                 <input type="text" onChange={handleTechs} value={techs}/>
                 <button>Criar projeto</button>
             </form>
+            <h1>Meus projetos</h1>
+            
+            <div>
+                {projects.map((proj: Project) => {
+                if (proj.userId !== user?.id) return;
+                return (
+                <div key={proj.id}>
+                    <h2>{proj.title}</h2>
+                    <button onClick={() => {deleteProject(proj.id)}}>Excluir projeto</button>
+                    <p>{proj.description}</p>
+                    <h4>Tecnologias usadas</h4>
+                    <ul>
+                        {proj.technologies.map(tech => (
+                            <li key={tech}>{tech}</li>
+                        ))}
+                    </ul>
+                </div>
+                )
+                })}
+            </div>
+                
+
         </>
     )
 }

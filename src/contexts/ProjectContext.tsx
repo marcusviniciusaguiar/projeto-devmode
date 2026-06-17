@@ -32,7 +32,7 @@ function ProjectProvider({ children }: {children: ReactNode}) {
 
         
 
-        const newProjectsArray = [...projects, project];
+        const newProjectsArray = [project, ...projects];
 
         setProjects(newProjectsArray);
 
