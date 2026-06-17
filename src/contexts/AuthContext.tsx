@@ -11,7 +11,7 @@ const authContext = createContext<AuthContextInterface | null>(null);
 
 function AuthProvider({ children }: {children: ReactNode}) {
 
-    const [user, setUser] = useState<User | null>(null);
+    const [user, setUser] = useState<User | null>(JSON.parse(localStorage.getItem("loggedUser") || "null"));
 
     const login = (email: string, password: string) => {
 
@@ -23,10 +23,15 @@ function AuthProvider({ children }: {children: ReactNode}) {
 
         setUser(usersArrayResponse);
 
+        localStorage.setItem("loggedUser", JSON.stringify(usersArrayResponse));
+
         return true;
     }
 
-    const logout = () => setUser(null);
+    const logout = () => {
+        setUser(null);
+        localStorage.removeItem("loggedUser");
+    }
 
 
     return (
