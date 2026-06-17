@@ -1,4 +1,4 @@
-import { createContext, useState, type ReactNode } from "react";
+import { createContext, useContext, useState, type ReactNode } from "react";
 import type { User } from "../types/User";
 
 interface AuthContextInterface {
@@ -17,7 +17,7 @@ function AuthProvider({ children }: {children: ReactNode}) {
 
         const usersArray = JSON.parse(localStorage.getItem("users") || "[]");
 
-        const usersArrayResponse = usersArray.find((localUser) => localUser.email === email && localUser.password === password);
+        const usersArrayResponse = usersArray.find((localUser: User) => localUser.email === email && localUser.password === password);
 
         if(!usersArrayResponse) return false;
 
@@ -36,5 +36,16 @@ function AuthProvider({ children }: {children: ReactNode}) {
     )
 
 }
+
+export function useAuth() {
+    const context = useContext(authContext);
+
+    if(!context) {
+        throw new Error("Erro ao utilizar contexto, utilize dentro do Provider.");
+    }
+
+    return context;
+}
+
 
 export default AuthProvider;
