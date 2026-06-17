@@ -6,6 +6,7 @@ interface ProjectContextInterface {
     projects: Project[];
     addProject: (title: string, description: string, technologies: string[]) => void;
     deleteProject: (id: string) => void;
+    updateProject: (project: Project) => void;
 }
 
 const projectContext = createContext<ProjectContextInterface | null>(null);
@@ -37,7 +38,20 @@ function ProjectProvider({ children }: {children: ReactNode}) {
         setProjects(newProjectsArray);
 
         localStorage.setItem("projects", JSON.stringify(newProjectsArray));
+    }
 
+    const updateProject = (project: Project) => {
+
+        const newProjectsArray = projects.map((proj: Project) => {
+            if(proj.id === project.id) {
+                return project;
+            }
+            return proj;
+        })
+
+        setProjects(newProjectsArray);
+
+        localStorage.setItem("projects", JSON.stringify(newProjectsArray));
     }
 
     const deleteProject = (id: string) => {
@@ -47,11 +61,10 @@ function ProjectProvider({ children }: {children: ReactNode}) {
         setProjects(newProjectsArray);
 
         localStorage.setItem("projects", JSON.stringify(newProjectsArray));
-
     }
 
     return (
-        <projectContext.Provider value={{projects, addProject, deleteProject}}>
+        <projectContext.Provider value={{projects, addProject, updateProject, deleteProject}}>
             {children}
         </projectContext.Provider>
     )
