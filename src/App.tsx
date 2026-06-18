@@ -7,6 +7,7 @@ import Dashboard from './pages/Dashboard'
 import Register from './pages/Register'
 import ProtectedRoute from './components/ProtectedRoute'
 import EditProject from './pages/EditProject'
+import EditProfile from './pages/EditProfile'
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
               <Route path='/register' element={<Register />} />
               <Route path='/dashboard' element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
               <Route path='/projects/:projectId/edit' element={<ProtectedRoute><EditProject /></ProtectedRoute>} />
+              <Route path='/profile/edit' element={<ProtectedRoute><EditProfile /></ProtectedRoute>} />
             </Routes>
           </main>
         </BrowserRouter>

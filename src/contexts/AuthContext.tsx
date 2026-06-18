@@ -4,6 +4,7 @@ import type { User } from "../types/User";
 interface AuthContextInterface {
     user: User | null;
     login: (email: string, password: string) => boolean;
+    updateProfile: (updatedUser: User) => void;
     logout: () => void;
 }
 
@@ -28,6 +29,22 @@ function AuthProvider({ children }: {children: ReactNode}) {
         return true;
     }
 
+    const updateProfile = (updatedUser: User) => {
+        
+        const users = JSON.parse(localStorage.getItem("users") || "[]");
+
+        const newUsersArray = users.map((user: User) => {
+            if(user.id === updatedUser.id) {
+                return updatedUser;
+            }
+            return user;
+        })
+
+        localStorage.setItem("users", JSON.stringify(newUsersArray));
+        setUser(updatedUser);
+        localStorage.setItem("loggedUser", JSON.stringify(updatedUser));
+    }
+
     const logout = () => {
         setUser(null);
         localStorage.removeItem("loggedUser");
@@ -35,7 +52,7 @@ function AuthProvider({ children }: {children: ReactNode}) {
 
 
     return (
-        <authContext.Provider value={{user, login, logout}}>
+        <authContext.Provider value={{user, login, updateProfile, logout}}>
             {children}
         </authContext.Provider>
     )
