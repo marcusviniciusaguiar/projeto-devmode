@@ -6,6 +6,7 @@ import Header from './components/Header'
 import Dashboard from './pages/Dashboard'
 import Register from './pages/Register'
 import ProtectedRoute from './components/ProtectedRoute'
+import EditProject from './pages/EditProject'
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
               <Route path='/login' element={<Login />} />
               <Route path='/register' element={<Register />} />
               <Route path='/dashboard' element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+              <Route path='/projects/:projectId/edit' element={<ProtectedRoute><EditProject /></ProtectedRoute>} />
             </Routes>
           </main>
         </BrowserRouter>

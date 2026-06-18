@@ -38,7 +38,6 @@ function ProjectForm({project, onSubmit}: ProjectFormProps) {
     }
 
     return (
-        <>
         <form onSubmit={handleSubmit}>
                 <label>Título</label>
                 <input type="text" onChange={handleTitle} value={title}/>
@@ -48,7 +47,6 @@ function ProjectForm({project, onSubmit}: ProjectFormProps) {
                 <input type="text" onChange={handleTechs} value={techs}/>
                 <button>Salvar</button>
             </form>
-        </>
     )
 }
 
