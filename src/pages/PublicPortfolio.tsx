@@ -1,4 +1,4 @@
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import type { User } from "../types/User";
 import type { Project } from "../types/Project";
 import ProjectCard from "../components/ProjectCard";
@@ -6,7 +6,6 @@ import ProjectCard from "../components/ProjectCard";
 function PublicPortfolio() {
 
     const { userId } = useParams();
-    const navigate = useNavigate();
     const usersArray = JSON.parse(localStorage.getItem("users") || "[]");
     const user: User = usersArray.find((u: { id: number; }) => u.id === Number(userId));
 

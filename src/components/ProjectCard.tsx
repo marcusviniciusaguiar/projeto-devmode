@@ -13,6 +13,7 @@ function ProjectCard({ project, onDeleteProject }: ProjectCardProps) {
 
             {onDeleteProject ? (
                 <>
+                    <Link to={`/portfolio/${project.userId}`}>Visualizar projeto no perfil público</Link>
                     <Link to={`/projects/${project.id}/edit`}>Editar</Link>
                     <button onClick={() => { onDeleteProject?.(project.id) } }>Excluir</button>
                 </>
