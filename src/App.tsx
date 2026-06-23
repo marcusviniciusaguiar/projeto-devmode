@@ -9,13 +9,21 @@ import ProtectedRoute from './components/ProtectedRoute'
 import EditProject from './pages/EditProject'
 import EditProfile from './pages/EditProfile'
 import PublicPortfolio from './pages/PublicPortfolio'
+import styled from 'styled-components'
+import { theme } from './styles/theme'
+
+const Main = styled.main`
+  max-width: 960px;
+  margin: 0 auto;
+  padding: ${theme.spacing.lg};
+`
 
 function App() {
 
   return (
         <BrowserRouter>
         <Header />
-          <main>
+          <Main>
             <Routes>
               <Route path='/' element={<Home />} />
               <Route path='/login' element={<Login />} />
@@ -25,7 +33,7 @@ function App() {
               <Route path='/profile/edit' element={<ProtectedRoute><EditProfile /></ProtectedRoute>} />
               <Route path='/portfolio/:userId' element={<PublicPortfolio />} />
             </Routes>
-          </main>
+          </Main>
         </BrowserRouter>
   )
 }

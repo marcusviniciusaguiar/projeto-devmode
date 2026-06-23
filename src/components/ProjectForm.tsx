@@ -1,5 +1,6 @@
 import type { Project } from "../types/Project";
 import { useState } from "react";
+import { Button, Field, Form, Input, Select } from "./StyledComponents";
 
 export interface ProjectFormData {
     title: string;
@@ -84,29 +85,45 @@ function ProjectForm({project, onSubmit}: ProjectFormProps) {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-                <label>Título</label>
-                <input type="text" onChange={handleTitle} value={title}/>
-                <label>Descrição</label>
-                <input type="text" onChange={handleDescription} value={description}/>
-                <label>Tecnologias usadas</label>
-                <input type="text" onChange={handleTechs} value={techs}/>
-                <label>Imagem</label>
-                <input type="text" onChange={handleImage} value={imageUrl}/>
-                <label>Link do repositório do GitHub</label>
-                <input type="text" onChange={handleGithub} value={githubUrl}/>
-                <label>Live URL do projeto</label>
-                <input type="text" onChange={handleLiveUrl} value={liveUrl}/>
-                <label>Data de conclusão</label>
-                <input type="date" onChange={handleCompletedDate} value={completedDate}/>
-                <label>Status do projeto</label>
-                <select value={status} onChange={handleStatus}>
-                    <option value="Concluído">Concluído</option>
-                    <option value="Em Progresso">Em Progresso</option>
-                    <option value="Planejado">Planejado</option>
-                </select>
-                <button>Salvar</button>
-            </form>
+        <Form onSubmit={handleSubmit}>
+                <Field>
+                    Título
+                    <Input type="text" onChange={handleTitle} value={title}/>
+                </Field>
+                <Field>
+                    Descrição
+                    <Input type="text" onChange={handleDescription} value={description}/>
+                </Field>
+                <Field>
+                    Tecnologias usadas
+                    <Input type="text" onChange={handleTechs} value={techs}/>
+                </Field>
+                <Field>
+                    Imagem
+                    <Input type="text" onChange={handleImage} value={imageUrl}/>
+                </Field>
+                <Field>
+                    Link do repositório do GitHub
+                    <Input type="text" onChange={handleGithub} value={githubUrl}/>
+                </Field>
+                <Field>
+                    Live URL do projeto
+                    <Input type="text" onChange={handleLiveUrl} value={liveUrl}/>
+                </Field>
+                <Field>
+                    Data de conclusão
+                    <Input type="date" onChange={handleCompletedDate} value={completedDate}/>
+                </Field>
+                <Field>
+                    Status do projeto
+                    <Select value={status} onChange={handleStatus}>
+                        <option value="Concluído">Concluído</option>
+                        <option value="Em Progresso">Em Progresso</option>
+                        <option value="Planejado">Planejado</option>
+                    </Select>
+                </Field>
+                <Button>Salvar</Button>
+            </Form>
     )
 }
 

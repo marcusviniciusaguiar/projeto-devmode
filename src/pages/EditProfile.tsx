@@ -2,6 +2,7 @@ import { useState, type ChangeEvent } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import type { User } from "../types/User";
+import { Button, Field, Form, Input } from "../components/StyledComponents";
 
 function EditProfile() {
 
@@ -60,23 +61,37 @@ function EditProfile() {
     return (
         <>
             <h1>Edição de perfil</h1>
-            <form onSubmit={handleSubmit}>
-                <label>Email</label>
-                <input type="text" value={user.email} readOnly/>
-                <label>Nome</label>
-                <input type="text" onChange={handleName} value={name} />
-                <label>Biografia</label>
-                <input type="text" onChange={handleBio} value={bio} />
-                <label>Título do perfil</label>
-                <input type="text" onChange={handleTitle} value={title} />
-                <label>Foto</label>
-                <input type="text" onChange={handlePhoto} value={photo} />
-                <label>GitHub</label>
-                <input type="text" onChange={handleGithub} value={github} />
-                <label>LinkedIn</label>
-                <input type="text" onChange={handleLinkedin} value={linkedin} />
-                <button>Salvar alterações</button>
-            </form>
+            <Form onSubmit={handleSubmit}>
+                <Field>
+                    Email
+                    <Input type="text" value={user.email} readOnly/>
+                </Field>
+                <Field>
+                    Nome
+                    <Input type="text" onChange={handleName} value={name} />
+                </Field>
+                <Field>
+                    Biografia
+                    <Input type="text" onChange={handleBio} value={bio} />
+                </Field>
+                <Field>
+                    Título do perfil
+                    <Input type="text" onChange={handleTitle} value={title} />
+                </Field>
+                <Field>
+                    Foto
+                    <Input type="text" onChange={handlePhoto} value={photo} />
+                </Field>
+                <Field>
+                    GitHub
+                    <Input type="text" onChange={handleGithub} value={github} />
+                </Field>
+                <Field>
+                    LinkedIn
+                    <Input type="text" onChange={handleLinkedin} value={linkedin} />
+                </Field>
+                <Button>Salvar alterações</Button>
+            </Form>
         </>
     )
 }

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import type { User } from "../types/User";
+import { Button, Field, Form, Input } from "../components/StyledComponents";
 
 function Register() {
 
@@ -50,15 +51,21 @@ function Register() {
     return (
         <>
         <h1>Register</h1>
-        <form onSubmit={handleSubmit}>
-            <label>Nome</label>
-            <input type="text" onChange={handleName} value={name}/>
-            <label>Email</label>
-            <input type="email" onChange={handleEmail} value={email} />
-            <label>Senha</label>
-            <input type="password" onChange={handlePassword} value={password} />
-            <button>Cadastrar</button>
-        </form>
+        <Form onSubmit={handleSubmit}>
+            <Field>
+                Nome
+                <Input type="text" onChange={handleName} value={name}/>
+            </Field>
+            <Field>
+                Email
+                <Input type="email" onChange={handleEmail} value={email} />
+            </Field>
+            <Field>
+                Senha
+                <Input type="password" onChange={handlePassword} value={password} />
+            </Field>
+            <Button>Cadastrar</Button>
+        </Form>
         </>
     )
 }

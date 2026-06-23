@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { Button, Field, Form, Input } from "../components/StyledComponents";
 
 function Login() {
 
@@ -32,13 +33,17 @@ function Login() {
     return (
         <>
         <h1>Login</h1>
-        <form onSubmit={handleSubmit}>
-            <label>Email</label>
-            <input type="email" onChange={handleEmail} value={email} />
-            <label>Senha</label>
-            <input type="password" onChange={handlePassword} value={password} />
-            <button>Entrar</button>
-        </form>
+        <Form onSubmit={handleSubmit}>
+            <Field>
+                Email
+                <Input type="email" onChange={handleEmail} value={email} />
+            </Field>
+            <Field>
+                Senha
+                <Input type="password" onChange={handlePassword} value={password} />
+            </Field>
+            <Button>Entrar</Button>
+        </Form>
         </>
     )
 }
