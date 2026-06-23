@@ -48,6 +48,7 @@ function Header() {
             { user ? (
                 <Navbar>
                     <NavLink to={`/portfolio/${user.id}`}>{user.name}</NavLink>
+                    <NavLink to={`/favorites`}>Favoritos</NavLink>
                     <NavLink to={"/profile/edit"}>Editar perfil</NavLink>
                     <LogoutButton onClick={() => logout()}>Sair</LogoutButton>
                 </Navbar>

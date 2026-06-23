@@ -5,6 +5,8 @@ import { theme } from "../styles/theme";
 import { useState } from "react";
 import Modal from "./Modal";
 import { Button } from "./StyledComponents";
+import { useFavorites } from "../contexts/FavoritesContext";
+import { useAuth } from "../contexts/AuthContext";
 
 const Card = styled.div<{ $borderColor: string }>`
   background: ${theme.colors.surface};
@@ -43,14 +45,23 @@ interface ProjectCardProps {
 
 function ProjectCard({ project, onDeleteProject }: ProjectCardProps) {
     const [modalOpen, setModalOpen] = useState<boolean>(false);
+    const { favorites, toggleFavorite } = useFavorites();
+    const { user } = useAuth();
 
     const closeModal = () => {
         setModalOpen(false);
     }
+
+    const isFavorite = favorites.includes(project.id);
     
     return (
         <Card $borderColor={statusColor[project.status]}>
             <h2>{project.title}</h2>
+            {user ? (
+            <button onClick={() => toggleFavorite(project.id)}>{isFavorite ? <span>♥</span> : <span>♡</span>}</button>
+            ) : (
+            <span>Faça login para favoritar</span>
+            )}
             <Thumb src={project.imageUrl} alt={project.title}/>
 
             {onDeleteProject ? (
