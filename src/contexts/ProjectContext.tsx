@@ -1,10 +1,11 @@
 import { useContext, createContext, useState, type ReactNode } from "react";
 import type { Project } from "../types/Project";
 import { useAuth } from "./AuthContext";
+import type { ProjectFormData } from "../components/ProjectForm";
 
 interface ProjectContextInterface {
     projects: Project[];
-    addProject: (title: string, description: string, technologies: string[]) => void;
+    addProject: (data: ProjectFormData) => void;
     deleteProject: (id: string) => void;
     updateProject: (project: Project) => void;
 }
@@ -16,18 +17,14 @@ function ProjectProvider({ children }: {children: ReactNode}) {
     const [projects, setProjects] = useState<Project[]>(JSON.parse(localStorage.getItem("projects") || "[]"));
     const { user } = useAuth();
 
-    const addProject = (title: string, description: string, technologies: string[]) => {
+    const addProject = (data: ProjectFormData) => {
 
         if(!user) return;
 
         const project: Project = {
+            ...data,
             id: Date.now().toString(),
             userId: user.id,
-            title: title,
-            description: description,
-            technologies: technologies,
-            imageUrl: "",
-            status: "Planejado",
             createdAt: Date.now().toString()
         }
 

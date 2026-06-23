@@ -1,28 +1,64 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import styled from "styled-components";
+import { theme } from "../styles/theme";
+
+const PageHeader = styled.header`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: ${theme.spacing.md} ${theme.spacing.lg};
+  background: ${theme.colors.surface};
+`
+const Logo = styled(Link)`
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: ${theme.colors.text};
+  text-decoration: none;
+  cursor: pointer;
+`
+
+const Navbar = styled.nav`
+  display: flex;
+  align-items: center;
+  gap: ${theme.spacing.md};
+`
+
+const NavLink = styled(Link)`
+  color: ${theme.colors.text};
+  text-decoration: none;
+`
+
+const LogoutButton = styled.button`
+  background: ${theme.colors.primary};
+  color: ${theme.colors.text};
+  border: none;
+  padding: ${theme.spacing.sm} ${theme.spacing.md};
+  border-radius: 6px;
+  cursor: pointer;
+`
 
 function Header() {
 
     const { user, logout } = useAuth();
 
     return(
-        <>
-        <Link to={"/"}>Ir para a Home </Link>
-        { user ? (
-            <nav>
-                <span>{user.name}</span>
-                <Link to={"/profile/edit"}>Editar perfil</Link>
-                <button onClick={() => logout()}>Sair</button>
-            </nav>
-            ) : (
-            <nav>
-                <Link to={"/login"}>Fazer login</Link>
-                <Link to={"/register"}>Registrar-se</Link>
-            </nav>
-            )
-        }
-        
-        </>
+        <PageHeader>
+            <Logo to={"/"}>DevHub</Logo>
+            { user ? (
+                <Navbar>
+                    <NavLink to={`/portfolio/${user.id}`}>{user.name}</NavLink>
+                    <NavLink to={"/profile/edit"}>Editar perfil</NavLink>
+                    <LogoutButton onClick={() => logout()}>Sair</LogoutButton>
+                </Navbar>
+                ) : (
+                <Navbar>
+                    <NavLink to={"/login"}>Fazer login</NavLink>
+                    <NavLink to={"/register"}>Registrar-se</NavLink>
+                </Navbar>
+                )
+            }
+        </PageHeader>
     )
 }
 

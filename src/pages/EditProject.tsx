@@ -2,6 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useProjects } from "../contexts/ProjectContext";
 import ProjectForm from "../components/ProjectForm";
 import type { Project } from "../types/Project";
+import type { ProjectFormData } from "../components/ProjectForm";
 
 function EditProject() {
 
@@ -12,12 +13,10 @@ function EditProject() {
     const project = projects.find(proj => proj.id === params.projectId);
     if(!project) return null;
 
-    const handleUpdate = (title: string, description: string, technologies: string[]) => {
+    const handleUpdate = (data: ProjectFormData) => {
         const editedProject: Project = {
-         ...project, 
-         title: title,
-         description: description,
-         technologies: technologies
+            ...project,
+            ...data
         };
 
         updateProject(editedProject);

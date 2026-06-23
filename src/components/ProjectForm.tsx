@@ -1,9 +1,20 @@
 import type { Project } from "../types/Project";
 import { useState } from "react";
 
+export interface ProjectFormData {
+    title: string;
+    description: string;
+    technologies: string[];
+    imageUrl: string;
+    githubUrl?: string;
+    liveUrl?: string;
+    completedDate?: string;
+    status: "Em Progresso" | "Concluído" | "Planejado";
+}
+
 interface ProjectFormProps {
     project?: Project;
-    onSubmit: (title: string, description: string, technologies: string[]) => void;
+    onSubmit: (data: ProjectFormData) => void;
 }
 
 function ProjectForm({project, onSubmit}: ProjectFormProps) {
@@ -11,6 +22,12 @@ function ProjectForm({project, onSubmit}: ProjectFormProps) {
     const [title, setTitle] = useState(project?.title || "");
     const [description, setDescription] = useState<string>(project?.description || "");
     const [techs, setTechs] = useState<string>(project?.technologies.join(",") || "");
+    const [imageUrl, setImage] = useState<string>(project?.imageUrl || "");
+    const [githubUrl, setGithub] = useState<string>(project?.githubUrl || "");
+    const [liveUrl, setLiveUrl] = useState<string>(project?.liveUrl || "");
+    const [completedDate, setCompletedDate] = useState<string>(project?.completedDate || "");
+    const [status, setStatus] = useState<Project["status"]>(project?.status || "Planejado");
+
 
     const handleTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(event.target.value);
@@ -23,17 +40,46 @@ function ProjectForm({project, onSubmit}: ProjectFormProps) {
     const handleTechs = (event: React.ChangeEvent<HTMLInputElement>) => {
         setTechs(event.target.value);
     }
+
+    const handleImage = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setImage(event.target.value);
+    }
+
+    const handleGithub = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setGithub(event.target.value);
+    }
+
+    const handleLiveUrl = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setLiveUrl(event.target.value);
+    }
+
+    const handleCompletedDate = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setCompletedDate(event.target.value);
+    }
+    
+    const handleStatus = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        const value = (event.target.value);
+        if(value === "Planejado" || value === "Em Progresso" || value === "Concluído") {
+            setStatus(value);
+        }
+    }
     
     const handleSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {
         
         event.preventDefault();
         const arrayTechs = techs.split(",").map(str => str.trim());
         
-        onSubmit(title, description, arrayTechs);
+        onSubmit({title, description, technologies: arrayTechs, imageUrl, githubUrl, liveUrl, completedDate, status});
 
         setTitle("");
         setDescription("");
         setTechs("");
+        setImage("");
+        setGithub("");
+        setLiveUrl("");
+        setCompletedDate("");
+        setStatus("Planejado");
+        
 
     }
 
@@ -45,6 +91,20 @@ function ProjectForm({project, onSubmit}: ProjectFormProps) {
                 <input type="text" onChange={handleDescription} value={description}/>
                 <label>Tecnologias usadas</label>
                 <input type="text" onChange={handleTechs} value={techs}/>
+                <label>Imagem</label>
+                <input type="text" onChange={handleImage} value={imageUrl}/>
+                <label>Link do repositório do GitHub</label>
+                <input type="text" onChange={handleGithub} value={githubUrl}/>
+                <label>Live URL do projeto</label>
+                <input type="text" onChange={handleLiveUrl} value={liveUrl}/>
+                <label>Data de conclusão</label>
+                <input type="date" onChange={handleCompletedDate} value={completedDate}/>
+                <label>Status do projeto</label>
+                <select value={status} onChange={handleStatus}>
+                    <option value="Concluído">Concluído</option>
+                    <option value="Em Progresso">Em Progresso</option>
+                    <option value="Planejado">Planejado</option>
+                </select>
                 <button>Salvar</button>
             </form>
     )
