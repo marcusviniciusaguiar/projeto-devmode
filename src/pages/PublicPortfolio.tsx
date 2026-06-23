@@ -4,6 +4,8 @@ import type { Project } from "../types/Project";
 import ProjectCard from "../components/ProjectCard";
 import styled from "styled-components";
 import { theme } from "../styles/theme";
+import { useProjects } from "../contexts/ProjectContext";
+import { useAuth } from "../contexts/AuthContext";
 
 const Grid = styled.div`
   display: grid;
@@ -13,32 +15,40 @@ const Grid = styled.div`
 
 function PublicPortfolio() {
 
+    const { deleteProject } = useProjects();
+    const { user } = useAuth();
     const { userId } = useParams();
     const usersArray = JSON.parse(localStorage.getItem("users") || "[]");
-    const user: User = usersArray.find((u: { id: number; }) => u.id === Number(userId));
+    const userOwner: User = usersArray.find((u: { id: number; }) => u.id === Number(userId));
+    const isOwner = user?.id === Number(userId);
 
     const projectsArray = JSON.parse(localStorage.getItem("projects") || "[]");
     const projects: Project[] = projectsArray.filter((proj: Project) => proj.userId === Number(userId));
 
-    if(!user) return <Navigate to="/" replace/>;
+    if(!userOwner) return <Navigate to="/" replace/>;
+
 
     return (
         <>
-            <h1>{user.name}</h1>
-            <h2>{user.title}</h2>
-            <img src={user.photo} alt={user.name} />
+            <h1>{userOwner.name}</h1>
+            <h2>{userOwner.title}</h2>
+            <img src={userOwner.photo} alt={userOwner.name} />
             <h4>Biografia</h4>
-            <p>{user.bio}</p>
+            <p>{userOwner.bio}</p>
             <h4>Links</h4>
-            <a href={user.linkedin || ""} target="_blank" rel="noopener noreferrer">Linkedin</a>
-            <a href={user.github || ""} target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a href={userOwner.linkedin || ""} target="_blank" rel="noopener noreferrer">Linkedin</a>
+            <a href={userOwner.github || ""} target="_blank" rel="noopener noreferrer">GitHub</a>
 
             <h2>Projetos</h2>
         
             <Grid>
                 {
                     projects.map(proj => {
-                    return <ProjectCard key={proj.id} project={proj} />
+                        if(isOwner) {
+                            return <ProjectCard onDeleteProject={deleteProject} key={proj.id} project={proj} />
+                        } else {
+                            return <ProjectCard key={proj.id} project={proj} />
+                        }
                     })
                 }
             </Grid>

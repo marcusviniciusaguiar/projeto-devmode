@@ -2,6 +2,9 @@ import styled from "styled-components";
 import type { Project } from "../types/Project";
 import { Link } from "react-router-dom";
 import { theme } from "../styles/theme";
+import { useState } from "react";
+import Modal from "./Modal";
+import { Button } from "./StyledComponents";
 
 const Card = styled.div<{ $borderColor: string }>`
   background: ${theme.colors.surface};
@@ -33,13 +36,18 @@ const Badge = styled.span<{ $color: string }>`
   color: ${theme.colors.background};
 `
 
-
 interface ProjectCardProps {
     project: Project;
     onDeleteProject?: (id: string) => void;
 }
 
 function ProjectCard({ project, onDeleteProject }: ProjectCardProps) {
+    const [modalOpen, setModalOpen] = useState<boolean>(false);
+
+    const closeModal = () => {
+        setModalOpen(false);
+    }
+    
     return (
         <Card $borderColor={statusColor[project.status]}>
             <h2>{project.title}</h2>
@@ -49,10 +57,19 @@ function ProjectCard({ project, onDeleteProject }: ProjectCardProps) {
                 <>
                     <Link to={`/portfolio/${project.userId}`}>Visualizar projeto no perfil público</Link>
                     <Link to={`/projects/${project.id}/edit`}>Editar</Link>
-                    <button onClick={() => { onDeleteProject(project.id) } }>Excluir</button>
+                    <button onClick={() => setModalOpen(true)}>Excluir</button>
+
+                    <Modal isOpen={modalOpen} onClose={closeModal}>
+                        <h3>Tem certeza que quer excluir este projeto?</h3>
+                        <p>{project.title} sairá de sua lista de projetos.</p>
+                        <p>Essa ação é irreversível.</p>
+                        <Button onClick={closeModal}>Cancelar</Button>
+                        <Button onClick={() => {onDeleteProject(project.id); closeModal();}}>Deletar permanentemente</Button>
+                    </Modal>
                 </>
                 ) : null
             }
+
 
             <p>{project.description.length > 150 ? project.description.slice(0,150) + "..." : project.description}</p>
             
