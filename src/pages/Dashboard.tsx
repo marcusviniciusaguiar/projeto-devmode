@@ -7,6 +7,7 @@ import ProjectCard from "../components/ProjectCard";
 function Dashboard() {
     const { addProject, projects, deleteProject } = useProjects();
     const { user } = useAuth();
+    const userProjects = projects.filter((proj) => proj.userId == user?.id)
 
     return (
         <>
@@ -16,13 +17,15 @@ function Dashboard() {
             <h1>Meus projetos</h1>
             
             <div>
-                {projects.map((proj: Project) => {
-                    if (proj.userId !== user?.id) return;
-
-                    return (
-                        <ProjectCard key={proj.id} project={proj} onDeleteProject={deleteProject}/>
-                    )
-                })}
+                {userProjects.length === 0 ?
+                    <p>Você não tem projetos ainda. Crie seu primeiro!</p> 
+                :
+                    userProjects.map((proj: Project) => {
+                        return (
+                            <ProjectCard key={proj.id} project={proj} onDeleteProject={deleteProject}/>
+                        )
+                    })
+                }
             </div>
                 
 
