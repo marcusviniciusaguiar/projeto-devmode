@@ -3,6 +3,14 @@ import { useProjects } from "../contexts/ProjectContext";
 import type { Project } from "../types/Project";
 import ProjectForm from "../components/ProjectForm";
 import ProjectCard from "../components/ProjectCard";
+import styled from "styled-components";
+import { theme } from "../styles/theme";
+
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: ${theme.spacing.lg};
+`
 
 function Dashboard() {
     const { addProject, projects, deleteProject } = useProjects();
@@ -16,7 +24,7 @@ function Dashboard() {
             <ProjectForm onSubmit={addProject}/>
             <h1>Meus projetos</h1>
             
-            <div>
+            <Grid>
                 {userProjects.length === 0 ?
                     <p>Você não tem projetos ainda. Crie seu primeiro!</p> 
                 :
@@ -26,7 +34,7 @@ function Dashboard() {
                         )
                     })
                 }
-            </div>
+            </Grid>
                 
 
         </>
