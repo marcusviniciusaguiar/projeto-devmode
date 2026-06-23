@@ -2,6 +2,14 @@ import { Navigate, useParams } from "react-router-dom";
 import type { User } from "../types/User";
 import type { Project } from "../types/Project";
 import ProjectCard from "../components/ProjectCard";
+import styled from "styled-components";
+import { theme } from "../styles/theme";
+
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: ${theme.spacing.lg};
+`
 
 function PublicPortfolio() {
 
@@ -26,11 +34,15 @@ function PublicPortfolio() {
             <a href={user.github || ""} target="_blank" rel="noopener noreferrer">GitHub</a>
 
             <h2>Projetos</h2>
-            {
-                projects.map(proj => {
-                   return <ProjectCard key={proj.id} project={proj} />
-                })
-            }
+        
+            <Grid>
+                {
+                    projects.map(proj => {
+                    return <ProjectCard key={proj.id} project={proj} />
+                    })
+                }
+            </Grid>
+            
         </>
     )
 }
