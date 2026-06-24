@@ -1,6 +1,7 @@
 import type { Project } from "../types/Project";
 import { useState } from "react";
 import { Button, Field, Form, Input, Select } from "./StyledComponents";
+import { useToast } from "../contexts/ToastContext";
 
 export interface ProjectFormData {
     title: string;
@@ -19,6 +20,8 @@ interface ProjectFormProps {
 }
 
 function ProjectForm({project, onSubmit}: ProjectFormProps) {
+
+    const { showToast } = useToast();
 
     const [title, setTitle] = useState(project?.title || "");
     const [description, setDescription] = useState<string>(project?.description || "");
@@ -69,7 +72,38 @@ function ProjectForm({project, onSubmit}: ProjectFormProps) {
         
         event.preventDefault();
         const arrayTechs = techs.split(",").map(str => str.trim());
-        
+
+        if(!title || !description || !techs || !imageUrl) {
+            showToast("Todos os campos obrigatórios devem estar preenchidos");
+            return;
+        }
+
+        if(title.length > 100) {
+            showToast("O título deve ter no máximo 100 caracteres");
+            return;
+        }
+
+        if(description.length > 500) {
+            showToast("A descrição deve ter no máximo 500 caracteres");
+            return;
+        }
+
+        if(githubUrl && (!githubUrl.startsWith("http://") && !githubUrl.startsWith("https://"))) {
+            showToast('O link do GitHub deve começar com "http" ou "https"');
+            return;
+        }
+
+        if(liveUrl && (!liveUrl.startsWith("http://") && !liveUrl.startsWith("https://"))) {
+            showToast('A URL do projeto deve começar com "http" ou "https"');
+            return;
+        }
+
+        if(imageUrl && (!imageUrl.startsWith("http://") && !imageUrl.startsWith("https://"))) {
+            showToast('O link da foto deve começar com "http" ou "https"');
+            return;
+        }
+
+
         onSubmit({title, description, technologies: arrayTechs, imageUrl, githubUrl, liveUrl, completedDate, status});
 
         setTitle("");

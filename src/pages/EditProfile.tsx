@@ -3,6 +3,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import type { User } from "../types/User";
 import { Button, Field, Form, Input } from "../components/StyledComponents";
+import { useToast } from "../contexts/ToastContext";
 
 function EditProfile() {
 
@@ -11,10 +12,12 @@ function EditProfile() {
     }, []);
 
     const { user, updateProfile } = useAuth();
+    const { showToast } = useToast();
     const navigate = useNavigate();
 
     const [name, setName] = useState(user?.name || "");
     const [bio, setBio] = useState(user?.bio || "");
+    const [bioLength, setBioLength] = useState(0);
     const [title, setTitle] = useState(user?.title || "");
     const [photo, setPhoto] = useState(user?.photo || "");
     const [github, setGithub] = useState(user?.github || "");
@@ -28,6 +31,7 @@ function EditProfile() {
 
     const handleBio = (event: ChangeEvent<HTMLInputElement>) => {
         setBio(event.target.value);
+        setBioLength(event.target.value.length);
     }
 
     const handleTitle = (event: ChangeEvent<HTMLInputElement>) => {
@@ -46,6 +50,26 @@ function EditProfile() {
     const handleSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {
 
         event.preventDefault();
+
+        if(bio.length > 500) {
+            showToast("A biografia deve ter no máximo 500 caracteres");
+            return;
+        }
+
+        if(github && (!github.startsWith("http://") && !github.startsWith("https://"))) {
+            showToast('O link do GitHub deve começar com "http" ou "https"');
+            return;
+        }
+
+        if(linkedin && (!linkedin.startsWith("http://") && !linkedin.startsWith("https://"))) {
+            showToast('O link do Linkedin deve começar com "http" ou "https"');
+            return;
+        }
+
+        if(photo && (!photo.startsWith("http://") && !photo.startsWith("https://"))) {
+            showToast('O link da foto deve começar com "http" ou "https"');
+            return;
+        }
 
         const userEdited: User = {
             ...user,
@@ -77,6 +101,7 @@ function EditProfile() {
                 <Field>
                     Biografia
                     <Input type="text" onChange={handleBio} value={bio} />
+                    <p>{bioLength} caracteres de 500 máximos permitidos</p>
                 </Field>
                 <Field>
                     Título do perfil
