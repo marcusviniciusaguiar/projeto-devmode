@@ -32,8 +32,8 @@ function Modal({isOpen, onClose, children }: ModalProps) {
     if (!isOpen) return null;
 
     return (
-        <Overlay>
-            <Box>
+        <Overlay onClick={onClose}>
+            <Box onClick={e => e.stopPropagation()}>
                 {children}
             </Box>
         </Overlay>
