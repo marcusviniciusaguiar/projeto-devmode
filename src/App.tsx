@@ -11,6 +11,7 @@ import PublicPortfolio from './pages/PublicPortfolio'
 import styled from 'styled-components'
 import { theme } from './styles/theme'
 import Favorites from './pages/Favorites'
+import Discover from './pages/Discover'
 
 const Main = styled.main`
   max-width: 960px;
@@ -33,6 +34,7 @@ function App() {
               <Route path='/profile/edit' element={<ProtectedRoute><EditProfile /></ProtectedRoute>} />
               <Route path='/favorites' element={<ProtectedRoute><Favorites /></ProtectedRoute>} />
               <Route path='/portfolio/:userId' element={<PublicPortfolio />} />
+              <Route path='/discover' element={<Discover />} />
             </Routes>
           </Main>
         </BrowserRouter>

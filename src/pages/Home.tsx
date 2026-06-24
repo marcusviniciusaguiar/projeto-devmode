@@ -1,6 +1,7 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { theme } from "../styles/theme";
 import styled from "styled-components";
+import { useAuth } from "../contexts/AuthContext";
 
 const Hero = styled.div`
   display: flex;
@@ -37,6 +38,10 @@ const LoginLink = styled(Link)`
 `
 
 function Home() {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  if(user) navigate("/discover");
     return (
         <Hero>
             <h1>DevHub - A sua plataforma de portfólios Dev</h1>
