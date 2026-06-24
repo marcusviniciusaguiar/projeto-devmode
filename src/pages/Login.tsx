@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { Button, Field, Form, Input } from "../components/StyledComponents";
+import { useToast } from "../contexts/ToastContext";
 
 function Login() {
 
@@ -12,6 +13,7 @@ function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const { login } = useAuth();
+    const { showToast } = useToast();
     const navigate = useNavigate();
 
     const handleEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,11 +29,12 @@ function Login() {
         const sucessLogin = login(email, password);
 
         if(!sucessLogin) {
-            alert("Login falhou. Verifique as credenciais e tente novamente.");
+            showToast("Login falhou. Verifique as credenciais e tente novamente.");
             return;
         }
 
-        navigate("/dashboard");
+        showToast("Login bem sucedido! Redirecionando...")
+        setTimeout(() => navigate("/dashboard"), 1500);
     }
 
     return (

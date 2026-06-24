@@ -64,7 +64,7 @@ function ProjectCard({ project, onDeleteProject, children }: ProjectCardProps) {
             <span>Faça login para favoritar</span>
             )}
 
-            { project.imageUrl !== "" && <Thumb src={project.imageUrl} alt={project.title}/>}
+            { project.imageUrl && <Thumb src={project.imageUrl} alt={project.title}/>}
 
             {onDeleteProject ? (
                 <>

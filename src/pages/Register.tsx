@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import type { User } from "../types/User";
 import { Button, Field, Form, Input } from "../components/StyledComponents";
+import { useToast } from "../contexts/ToastContext";
 
 function Register() {
 
@@ -12,6 +13,7 @@ function Register() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const { showToast } = useToast()
     const navigate = useNavigate();
     const usersArray: User[] = JSON.parse(localStorage.getItem("users") || "[]");
 
@@ -33,8 +35,8 @@ function Register() {
         const userExists = usersArray.find((userRegistered) => userRegistered.email === email);
 
         if(userExists) {
-            alert("Email já cadastrado anteriormente. Faça login.");
-            navigate("/login");
+            showToast("Email já cadastrado anteriormente. Faça login.");
+            setTimeout(() => navigate("/login"), 1500);
             return;
         }
 
@@ -49,7 +51,8 @@ function Register() {
         const newUsersArray = JSON.stringify([...usersArray, user]);
 
         localStorage.setItem("users", newUsersArray);
-        navigate("/login");
+        showToast("Cadastro bem sucedido!")
+        setTimeout(() => navigate("/login"), 1500);
     }
 
     return (
