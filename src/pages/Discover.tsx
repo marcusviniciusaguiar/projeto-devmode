@@ -62,7 +62,7 @@ function Discover() {
 
     return (
         <>
-            <h1>Discover</h1>
+            <h1>Comunidade</h1>
 
             <input type="text" onChange={handleSearch} value={search} />
             <select value={techFilter} onChange={handleTechFilter}>

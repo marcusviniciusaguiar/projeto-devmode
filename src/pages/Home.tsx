@@ -11,7 +11,7 @@ const Hero = styled.div`
   text-align: center;
   gap: ${theme.spacing.md};
   padding: ${theme.spacing.xl} 0;
-  min-height: calc(100vh - 120px);
+  min-height: 100%;
   justify-content: center;
 `
 
