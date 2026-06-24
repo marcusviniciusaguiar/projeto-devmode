@@ -2,7 +2,7 @@ import styled from "styled-components";
 import type { Project } from "../types/Project";
 import { Link } from "react-router-dom";
 import { theme } from "../styles/theme";
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import Modal from "./Modal";
 import { Button } from "./StyledComponents";
 import { useFavorites } from "../contexts/FavoritesContext";
@@ -41,9 +41,10 @@ const Badge = styled.span<{ $color: string }>`
 interface ProjectCardProps {
     project: Project;
     onDeleteProject?: (id: string) => void;
+    children?: ReactNode;
 }
 
-function ProjectCard({ project, onDeleteProject }: ProjectCardProps) {
+function ProjectCard({ project, onDeleteProject, children }: ProjectCardProps) {
     const [modalOpen, setModalOpen] = useState<boolean>(false);
     const { favorites, toggleFavorite } = useFavorites();
     const { user } = useAuth();
@@ -96,6 +97,7 @@ function ProjectCard({ project, onDeleteProject }: ProjectCardProps) {
                     <li key={tech}>{tech}</li>
                 ))}
             </ul>
+            {children}
         </Card>
     )
 }

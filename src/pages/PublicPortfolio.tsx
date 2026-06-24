@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { theme } from "../styles/theme";
 import { useProjects } from "../contexts/ProjectContext";
 import { useAuth } from "../contexts/AuthContext";
+import CommentsSection from "../components/CommentsSection";
 
 const Grid = styled.div`
   display: grid;
@@ -44,11 +45,11 @@ function PublicPortfolio() {
             <Grid>
                 {
                     projects.map(proj => {
-                        if(isOwner) {
-                            return <ProjectCard onDeleteProject={deleteProject} key={proj.id} project={proj} />
-                        } else {
-                            return <ProjectCard key={proj.id} project={proj} />
-                        }
+                            return (
+                                <ProjectCard key={proj.id} onDeleteProject={isOwner ? deleteProject : undefined} project={proj}>
+                                    <CommentsSection projectId={proj.id} />
+                                </ProjectCard>
+                            )
                     })
                 }
             </Grid>
