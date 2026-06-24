@@ -32,6 +32,21 @@ function Register() {
     const handleSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {
         event.preventDefault();
 
+        if(!name || !email || !password) {
+            showToast("Você deve preencher todos os campos para se registrar")
+            return;
+        }
+
+        if(!email.includes("@")) {
+            showToast('O email deve conter "@"');
+            return;
+        }
+
+        if(password.length < 8) {
+            showToast("Sua senha deve ter no mínimo 8 caracteres")
+            return;
+        }
+
         const userExists = usersArray.find((userRegistered) => userRegistered.email === email);
 
         if(userExists) {

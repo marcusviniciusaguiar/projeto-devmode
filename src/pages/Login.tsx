@@ -26,6 +26,12 @@ function Login() {
 
     const handleSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {
         event.preventDefault();
+
+        if(!email || !password) {
+            showToast("Você deve preencher todos os campos para fazer login.")
+            return;
+        }
+
         const sucessLogin = login(email, password);
 
         if(!sucessLogin) {
