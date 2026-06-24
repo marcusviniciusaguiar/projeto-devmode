@@ -100,7 +100,7 @@ function EditProfile() {
                 </Field>
                 <Field>
                     Biografia
-                    <Input type="text" onChange={handleBio} value={bio} />
+                    <Input type="text" onChange={handleBio} maxLength={500} value={bio} />
                     <p>{bioLength} caracteres de 500 máximos permitidos</p>
                 </Field>
                 <Field>

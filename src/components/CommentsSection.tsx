@@ -1,17 +1,21 @@
 import { useState } from "react";
 import type { Comment } from "../types/Comment";
 import { useAuth } from "../contexts/AuthContext";
+import { useToast } from "../contexts/ToastContext";
 
 function CommentsSection({ projectId } : {projectId: string}) {
 
     const [commentsArray, setCommentsArray] = useState<Comment[]>(JSON.parse(localStorage.getItem("comments") || "[]"));
     const currentProjectComments = commentsArray.filter((comment: Comment) => comment.projectId === projectId);
     const { user } = useAuth();
+    const { showToast } = useToast();
 
     const [text, setText] = useState("");
+    const [textLength, setTextLength] = useState(0);
 
     const handleText = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         setText(event.target.value);
+        setTextLength(event.target.value.length);
     }
 
     const handleDelete = (commentId: string) => {
@@ -25,6 +29,11 @@ function CommentsSection({ projectId } : {projectId: string}) {
         event.preventDefault();
 
         const author = user ? user.name : "Anônimo";
+
+        if(text.length > 300) {
+            showToast("O comentário deve ter no máximo 300 caracteres");
+            return;
+        }
 
         const newComment = {
             id: Date.now().toString(),
@@ -46,6 +55,7 @@ function CommentsSection({ projectId } : {projectId: string}) {
         <h3>Comentários</h3>
         <form onSubmit={handleSubmit}>
             <textarea onChange={handleText} value={text} maxLength={300} placeholder="Insira um novo comentário"/>
+            <p>{textLength} caracteres de 300 máximos permitidos</p>
             <button>Enviar comentário</button>
         </form>
         {currentProjectComments.length === 0 ? (
