@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import type { User } from "../types/User";
 import { Button, Field, Form, Input } from "../components/StyledComponents";
 
 function Register() {
+
+    useEffect(() => {
+        document.title = "DevHub • Register";
+    }, []);
 
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");

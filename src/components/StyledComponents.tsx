@@ -32,6 +32,8 @@ export const Button = styled.button`
   border-radius: 6px;
   cursor: pointer;
   font-size: 1rem;
+  transition: filter 0.2s;
+  &:hover { filter: brightness(1.2); }
 `
 
 export const Select = styled.select`

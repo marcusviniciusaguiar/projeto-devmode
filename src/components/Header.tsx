@@ -16,6 +16,7 @@ const Logo = styled(Link)`
   color: ${theme.colors.text};
   text-decoration: none;
   cursor: pointer;
+  &:hover { text-decoration: underline; }
 `
 
 const Navbar = styled.nav`
@@ -27,6 +28,7 @@ const Navbar = styled.nav`
 const NavLink = styled(Link)`
   color: ${theme.colors.text};
   text-decoration: none;
+  &:hover { text-decoration: underline; }
 `
 
 const LogoutButton = styled.button`
@@ -36,6 +38,8 @@ const LogoutButton = styled.button`
   padding: ${theme.spacing.sm} ${theme.spacing.md};
   border-radius: 6px;
   cursor: pointer;
+  transition: filter 0.2s;
+  &:hover { filter: brightness(1.2); }
 `
 
 function Header() {

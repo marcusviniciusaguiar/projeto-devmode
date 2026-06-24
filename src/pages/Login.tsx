@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { Button, Field, Form, Input } from "../components/StyledComponents";
 
 function Login() {
+
+    useEffect(() => {
+        document.title = "DevHub • Login";
+    }, []);
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");

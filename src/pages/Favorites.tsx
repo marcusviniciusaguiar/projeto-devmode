@@ -3,6 +3,7 @@ import { useFavorites } from "../contexts/FavoritesContext";
 import { useProjects } from "../contexts/ProjectContext";
 import { theme } from "../styles/theme";
 import ProjectCard from "../components/ProjectCard";
+import { useEffect } from "react";
 
 const Grid = styled.div`
   display: grid;
@@ -11,6 +12,10 @@ const Grid = styled.div`
 `
 
 function Favorites() {
+    
+    useEffect(() => {
+        document.title = "DevHub • Favoritos";
+    }, []);
     
     const { favorites } = useFavorites();
     const { projects } = useProjects();

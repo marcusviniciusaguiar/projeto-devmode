@@ -5,6 +5,7 @@ import ProjectForm from "../components/ProjectForm";
 import ProjectCard from "../components/ProjectCard";
 import styled from "styled-components";
 import { theme } from "../styles/theme";
+import { useEffect } from "react";
 
 const Grid = styled.div`
   display: grid;
@@ -13,6 +14,11 @@ const Grid = styled.div`
 `
 
 function Dashboard() {
+
+    useEffect(() => {
+        document.title = "DevHub • Dashboard";
+    }, []);
+      
     const { addProject, projects, deleteProject } = useProjects();
     const { user } = useAuth();
     const userProjects = projects.filter((proj) => proj.userId == user?.id)

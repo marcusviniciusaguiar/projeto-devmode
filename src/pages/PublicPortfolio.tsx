@@ -7,6 +7,7 @@ import { theme } from "../styles/theme";
 import { useProjects } from "../contexts/ProjectContext";
 import { useAuth } from "../contexts/AuthContext";
 import CommentsSection from "../components/CommentsSection";
+import { useEffect } from "react";
 
 const Grid = styled.div`
   display: grid;
@@ -22,6 +23,12 @@ function PublicPortfolio() {
     const usersArray = JSON.parse(localStorage.getItem("users") || "[]");
     const userOwner: User = usersArray.find((u: { id: number; }) => u.id === Number(userId));
     const isOwner = user?.id === Number(userId);
+
+    useEffect(() => {
+        if(userOwner) {
+            document.title = `DevHub • ${userOwner.name}`;
+        }
+    }, [userOwner]);
 
     const projectsArray = JSON.parse(localStorage.getItem("projects") || "[]");
     const projects: Project[] = projectsArray.filter((proj: Project) => proj.userId === Number(userId));

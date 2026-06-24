@@ -1,10 +1,14 @@
-import { useState, type ChangeEvent } from "react";
+import { useEffect, useState, type ChangeEvent } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import type { User } from "../types/User";
 import { Button, Field, Form, Input } from "../components/StyledComponents";
 
 function EditProfile() {
+
+    useEffect(() => {
+        document.title = "DevHub • Editar Perfil";
+    }, []);
 
     const { user, updateProfile } = useAuth();
     const navigate = useNavigate();

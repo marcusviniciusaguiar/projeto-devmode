@@ -1,9 +1,13 @@
 import { Link } from "react-router-dom";
 import type { User } from "../types/User";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { Project } from "../types/Project";
 
 function Discover() {
+
+    useEffect(() => {
+        document.title = "DevHub • Comunidade";
+    }, []);
 
     const users = JSON.parse(localStorage.getItem("users") || "[]");
     const projects = JSON.parse(localStorage.getItem("projects") || "[]");

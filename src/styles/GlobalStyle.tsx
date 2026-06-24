@@ -13,4 +13,12 @@ export const GlobalStyle = createGlobalStyle`
         color: ${theme.colors.text};
         font-family: sans-serif;
     }
+
+    html { 
+        scroll-behavior: smooth;
+    }
+    
+    button {
+        cursor: pointer;
+    }
 `

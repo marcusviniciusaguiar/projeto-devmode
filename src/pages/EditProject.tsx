@@ -3,8 +3,13 @@ import { useProjects } from "../contexts/ProjectContext";
 import ProjectForm from "../components/ProjectForm";
 import type { Project } from "../types/Project";
 import type { ProjectFormData } from "../components/ProjectForm";
+import { useEffect } from "react";
 
 function EditProject() {
+
+    useEffect(() => {
+        document.title = "DevHub • Editar Projeto";
+    }, []);
 
     const { projects, updateProject } = useProjects();
     const params = useParams();
