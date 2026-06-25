@@ -155,7 +155,7 @@ function Discover() {
                     <Grid>
                         {paginatedUsers.map((user: User) => (
                             <DevCard key={user.id}>
-                                {user.photo && <DevAvatar src={user.photo} alt={user.name}/>}
+                                <DevAvatar src={user.photo || "/user.png"} alt={user.name}/>
                                 <h3>{user.name}</h3>
                                 <h4>{user.title}</h4>
                                 <ViewButton to={`/portfolio/${user.id}`}>Ver Portfólio</ViewButton>

@@ -62,7 +62,7 @@ function PublicPortfolio() {
     return (
         <>
             <ProfileHeader>
-                {userOwner.photo && <Avatar src={userOwner.photo} alt={userOwner.name} />}
+                <Avatar src={userOwner.photo || "/user.png"} alt={userOwner.name} />
                 <h1>{userOwner.name}</h1>
                 <h2>{userOwner.title}</h2>
                 <h4>Biografia</h4>

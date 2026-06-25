@@ -32,7 +32,7 @@ const TextArea = styled.textarea`
 
 const CharCount = styled.span`
   font-size: 0.75rem;
-  color: ${theme.colors.primary};
+  color: ${theme.colors.text};
 `
 
 const CommentList = styled.div`
