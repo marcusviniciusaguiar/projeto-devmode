@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, type ReactNode } from "react";
 import type { User } from "../types/User";
+import { useToast } from "./ToastContext";
 
 interface AuthContextInterface {
     user: User | null;
@@ -13,6 +14,7 @@ const authContext = createContext<AuthContextInterface | null>(null);
 function AuthProvider({ children }: {children: ReactNode}) {
 
     const [user, setUser] = useState<User | null>(JSON.parse(localStorage.getItem("loggedUser") || "null"));
+    const { showToast } = useToast();
 
     const login = (email: string, password: string) => {
 
@@ -48,6 +50,7 @@ function AuthProvider({ children }: {children: ReactNode}) {
     const logout = () => {
         setUser(null);
         localStorage.removeItem("loggedUser");
+        showToast("Logout bem sucedido!")
     }
 
 

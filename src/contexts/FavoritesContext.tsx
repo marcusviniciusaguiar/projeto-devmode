@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, type ReactNode } from "react";
+import { useToast } from "./ToastContext";
 
 interface FavoritesContextInterface  {
     favorites: string[];
@@ -10,6 +11,7 @@ const favoritesContext = createContext<FavoritesContextInterface | null>(null);
 function FavoritesProvider({ children }: {children: ReactNode}) {
 
     const [favorites, setFavorites] = useState<string[]>(JSON.parse(localStorage.getItem("favorites") || "[]"));
+    const { showToast } = useToast();
 
     const toggleFavorite = (projectId: string) => {
         const isFavorite = favorites.includes(projectId);
@@ -18,10 +20,12 @@ function FavoritesProvider({ children }: {children: ReactNode}) {
             const newFavorites = [projectId, ...favorites];
             setFavorites(newFavorites);
             localStorage.setItem("favorites", JSON.stringify(newFavorites));
+            showToast("Projeto adicionado aos favorito!")
         } else {
             const newFavorites = favorites.filter(fav => fav !== projectId);
             setFavorites(newFavorites);
             localStorage.setItem("favorites", JSON.stringify(newFavorites));
+            showToast("Projeto removido dos favoritos!")
         }
 
     }

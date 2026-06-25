@@ -82,7 +82,8 @@ function EditProfile() {
         }
 
         updateProfile(userEdited);
-        navigate("/dashboard");
+        showToast("Usuário editado com sucesso! Redirecionando...")
+        setTimeout(() => navigate("/dashboard"), 1500);
 
     }
 

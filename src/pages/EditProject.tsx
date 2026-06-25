@@ -4,6 +4,7 @@ import ProjectForm from "../components/ProjectForm";
 import type { Project } from "../types/Project";
 import type { ProjectFormData } from "../components/ProjectForm";
 import { useEffect } from "react";
+import { useToast } from "../contexts/ToastContext";
 
 function EditProject() {
 
@@ -14,6 +15,7 @@ function EditProject() {
     const { projects, updateProject } = useProjects();
     const params = useParams();
     const navigate = useNavigate();
+    const { showToast } = useToast();
 
     const project = projects.find(proj => proj.id === params.projectId);
     if(!project) return null;
@@ -26,7 +28,8 @@ function EditProject() {
 
         updateProject(editedProject);
 
-        navigate("/dashboard");
+        showToast("Projeto editado com sucesso! Redirecionando...")
+        setTimeout(() => navigate("/dashboard"), 1500);
     }
 
 

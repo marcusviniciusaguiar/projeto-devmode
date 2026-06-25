@@ -114,8 +114,8 @@ function ProjectForm({project, onSubmit}: ProjectFormProps) {
         setLiveUrl("");
         setCompletedDate("");
         setStatus("Planejado");
-        
 
+        showToast("")
     }
 
     return (

@@ -2,6 +2,7 @@ import { useContext, createContext, useState, type ReactNode } from "react";
 import type { Project } from "../types/Project";
 import { useAuth } from "./AuthContext";
 import type { ProjectFormData } from "../components/ProjectForm";
+import { useToast } from "./ToastContext";
 
 interface ProjectContextInterface {
     projects: Project[];
@@ -16,6 +17,7 @@ function ProjectProvider({ children }: {children: ReactNode}) {
 
     const [projects, setProjects] = useState<Project[]>(JSON.parse(localStorage.getItem("projects") || "[]"));
     const { user } = useAuth();
+    const { showToast } = useToast();
 
     const addProject = (data: ProjectFormData) => {
 
@@ -28,13 +30,12 @@ function ProjectProvider({ children }: {children: ReactNode}) {
             createdAt: Date.now().toString()
         }
 
-        
-
         const newProjectsArray = [project, ...projects];
 
         setProjects(newProjectsArray);
 
         localStorage.setItem("projects", JSON.stringify(newProjectsArray));
+        showToast("Projeto criado com sucesso!");
     }
 
     const updateProject = (project: Project) => {
@@ -49,6 +50,7 @@ function ProjectProvider({ children }: {children: ReactNode}) {
         setProjects(newProjectsArray);
 
         localStorage.setItem("projects", JSON.stringify(newProjectsArray));
+        showToast("Projeto editado com sucesso!");
     }
 
     const deleteProject = (id: string) => {
@@ -58,6 +60,7 @@ function ProjectProvider({ children }: {children: ReactNode}) {
         setProjects(newProjectsArray);
 
         localStorage.setItem("projects", JSON.stringify(newProjectsArray));
+        showToast("Projeto excluído com sucesso!");
     }
 
     return (
