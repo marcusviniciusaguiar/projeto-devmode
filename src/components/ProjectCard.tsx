@@ -23,6 +23,58 @@ const Thumb = styled.img`
   object-fit: cover;
   border-radius: 6px;
 `
+
+const Title = styled.h3`
+  margin: 0;
+`
+
+const FavButton = styled.button`
+  align-self: flex-end;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: ${theme.colors.primary};
+`
+
+const Description = styled.p`
+  color: ${theme.colors.text};
+  font-size: 0.95rem;
+`
+
+const Actions = styled.div`
+  display: flex;
+  gap: ${theme.spacing.sm};
+  flex-wrap: wrap;
+`
+
+const ActionButton = styled.button`
+  background: ${theme.colors.primary};
+  color: ${theme.colors.text};
+  border: none;
+  padding: ${theme.spacing.xs} ${theme.spacing.sm};
+  border-radius: 6px;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 0.85rem;
+  &:hover { filter: brightness(1.2); }
+`
+
+const TechUl = styled.ul`
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: ${theme.spacing.xs};
+`
+
+const TechLi = styled.li`
+  background: ${theme.colors.background};
+  padding: ${theme.spacing.xs} ${theme.spacing.sm};
+  border-radius: 4px;
+  font-size: 0.8rem;
+`
+
 const statusColor = {
   "Concluído": theme.colors.status.completed,
   "Em Progresso": theme.colors.status.inProgress,
@@ -56,50 +108,55 @@ function ProjectCard({ project, onDeleteProject, children }: ProjectCardProps) {
     const isFavorite = favorites.includes(project.id);
     
     return (
-        <Card $borderColor={statusColor[project.status]}>
-            <h2>{project.title}</h2>
-            {user ? (
-            <button onClick={() => toggleFavorite(project.id)}>{isFavorite ? <span>♥</span> : <span>♡</span>}</button>
-            ) : (
-            <span>Faça login para favoritar</span>
-            )}
+      <Card $borderColor={statusColor[project.status]}>
 
-            { project.imageUrl && <Thumb src={project.imageUrl} alt={project.title}/>}
+        <Title>{project.title}</Title>
 
-            {onDeleteProject ? (
-                <>
-                    <Link to={`/portfolio/${project.userId}`}>Visualizar projeto no perfil público</Link>
-                    <Link to={`/projects/${project.id}/edit`}>Editar</Link>
-                    <button onClick={() => setModalOpen(true)}>Excluir</button>
+        {user ? (
+          <FavButton onClick={() => toggleFavorite(project.id)}>{isFavorite ? <span>♥</span> : <span>♡</span>}</FavButton>
+        ) : (
+          <span>Faça login para favoritar</span>
+        )}
 
-                    <Modal isOpen={modalOpen} onClose={closeModal}>
-                        <h3>Tem certeza que quer excluir este projeto?</h3>
-                        <p>{project.title} sairá de sua lista de projetos.</p>
-                        <p>Essa ação é irreversível.</p>
-                        <Button onClick={closeModal}>Cancelar</Button>
-                        <Button onClick={() => {onDeleteProject(project.id); closeModal();}}>Deletar permanentemente</Button>
-                    </Modal>
-                </>
-                ) : null
-            }
+        {project.imageUrl && <Thumb src={project.imageUrl} alt={project.title}/>}
+
+        {onDeleteProject ? (
+          <>
+            <Actions>
+              <ActionButton as={Link} to={`/portfolio/${project.userId}`}>Ver projeto</ActionButton>
+              <ActionButton as={Link} to={`/projects/${project.id}/edit`}>Editar</ActionButton>
+              <ActionButton as="button" onClick={() => setModalOpen(true)}>Excluir</ActionButton>
+            </Actions>
 
 
-            <p>{project.description.length > 150 ? project.description.slice(0,150) + "..." : project.description}</p>
-            
-            <Badge $color={statusColor[project.status]}>{project.status}</Badge>
-            
-            {project.completedDate && 
-                <p>Data de conclusão: {project.completedDate}</p>
-            }
+            <Modal isOpen={modalOpen} onClose={closeModal}>
+              <h3>Tem certeza que quer excluir este projeto?</h3>
+              <p>{project.title} sairá de sua lista de projetos.</p>
+              <p>Essa ação é irreversível.</p>
 
-            <h4>Tecnologias usadas</h4>
-            <ul>
-                {project.technologies.map(tech => (
-                    <li key={tech}>{tech}</li>
-                ))}
-            </ul>
-            {children}
-        </Card>
+              <Button onClick={closeModal}>Cancelar</Button>
+              <Button onClick={() => {onDeleteProject(project.id); closeModal();}}>Deletar permanentemente</Button>
+            </Modal>
+          </>
+        ) : null}
+
+        <Description>{project.description.length > 150 ? project.description.slice(0,150) + "..." : project.description}</Description>
+        
+        <Badge $color={statusColor[project.status]}>{project.status}</Badge>
+        
+        {project.completedDate && 
+          <p>Data de conclusão: {project.completedDate}</p>
+        }
+        
+        <TechUl>
+          {project.technologies.map(tech => (
+            <TechLi key={tech}>{tech}</TechLi>
+          ))}
+        </TechUl>
+
+        {children}
+        
+      </Card>
     )
 }
 

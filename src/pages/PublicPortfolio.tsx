@@ -15,6 +15,34 @@ const Grid = styled.div`
   gap: ${theme.spacing.lg};
 `
 
+const ProfileHeader = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: ${theme.spacing.sm};
+  margin-bottom: ${theme.spacing.xl};
+`
+
+const Avatar = styled.img`
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+`
+
+const ProfileLinks = styled.div`
+  display: flex;
+  gap: ${theme.spacing.md};
+  margin-top: ${theme.spacing.sm};
+`
+
+const ProfileLink = styled.a`
+  color: ${theme.colors.primary};
+  text-decoration: none;
+  &:hover { text-decoration: underline; }
+`
+
 function PublicPortfolio() {
 
     const { deleteProject } = useProjects();
@@ -38,29 +66,30 @@ function PublicPortfolio() {
 
     return (
         <>
-            <h1>{userOwner.name}</h1>
-            <h2>{userOwner.title}</h2>
-            <img src={userOwner.photo} alt={userOwner.name} />
-            <h4>Biografia</h4>
-            <p>{userOwner.bio}</p>
-            <h4>Links</h4>
-            <a href={userOwner.linkedin || ""} target="_blank" rel="noopener noreferrer">Linkedin</a>
-            <a href={userOwner.github || ""} target="_blank" rel="noopener noreferrer">GitHub</a>
+            <ProfileHeader>
+                {userOwner.photo && <Avatar src={userOwner.photo} alt={userOwner.name} />}
+                <h1>{userOwner.name}</h1>
+                <h2>{userOwner.title}</h2>
+                <h4>Biografia</h4>
+                <p>{userOwner.bio}</p>
+                <h4>Links</h4>
+                <ProfileLinks>
+                    <ProfileLink href={userOwner.linkedin || ""} target="_blank" rel="noopener noreferrer">Linkedin</ProfileLink>
+                    <ProfileLink href={userOwner.github || ""} target="_blank" rel="noopener noreferrer">GitHub</ProfileLink>
+                </ProfileLinks>
+            </ProfileHeader>
 
             <h2>Projetos</h2>
         
             <Grid>
-                {
-                    projects.map(proj => {
-                            return (
-                                <ProjectCard key={proj.id} onDeleteProject={isOwner ? deleteProject : undefined} project={proj}>
-                                    <CommentsSection projectId={proj.id} />
-                                </ProjectCard>
-                            )
-                    })
-                }
+                {projects.map(proj => {
+                    return (
+                        <ProjectCard key={proj.id} onDeleteProject={isOwner ? deleteProject : undefined} project={proj}>
+                            <CommentsSection projectId={proj.id} />
+                        </ProjectCard>
+                    )
+                })}
             </Grid>
-            
         </>
     )
 }
