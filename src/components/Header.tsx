@@ -9,6 +9,11 @@ const PageHeader = styled.header`
   justify-content: space-between;
   padding: ${theme.spacing.md} ${theme.spacing.lg};
   background: ${theme.colors.surface};
+
+  @media (${theme.breakpoints.mobile}) {
+    flex-direction: column;
+    gap: ${theme.spacing.sm};
+  }
 `
 const Logo = styled(Link)`
   font-size: 1.25rem;
@@ -23,6 +28,11 @@ const Navbar = styled.nav`
   display: flex;
   align-items: center;
   gap: ${theme.spacing.md};
+
+  @media (${theme.breakpoints.mobile}) {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 `
 
 const NavLink = styled(Link)`
