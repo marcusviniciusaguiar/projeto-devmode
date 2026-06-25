@@ -3,15 +3,8 @@ import { useProjects } from "../contexts/ProjectContext";
 import type { Project } from "../types/Project";
 import ProjectForm from "../components/ProjectForm";
 import ProjectCard from "../components/ProjectCard";
-import styled from "styled-components";
-import { theme } from "../styles/theme";
 import { useEffect } from "react";
-
-const Grid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: ${theme.spacing.lg};
-`
+import { Grid } from "../components/StyledComponents";
 
 function Dashboard() {
 

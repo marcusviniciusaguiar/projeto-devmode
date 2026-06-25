@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import type { Project } from "../types/Project";
 import styled from "styled-components";
 import { theme } from "../styles/theme";
+import { Grid } from "../components/StyledComponents";
 
 const SearchBar = styled.div`
   display: flex;
@@ -30,12 +31,6 @@ const FilterSelect = styled.select`
   background: ${theme.colors.surface};
   color: ${theme.colors.text};
   font-size: 1rem;
-`
-
-const ResultsGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: ${theme.spacing.lg};
 `
 
 const DevCard = styled.div`
@@ -157,7 +152,7 @@ function Discover() {
                 <h2>Nenhum portfólio encontrado</h2>
             ) : (
                 <>
-                    <ResultsGrid>
+                    <Grid>
                         {paginatedUsers.map((user: User) => (
                             <DevCard key={user.id}>
                                 {user.photo && <DevAvatar src={user.photo} alt={user.name}/>}
@@ -166,7 +161,7 @@ function Discover() {
                                 <ViewButton to={`/portfolio/${user.id}`}>Ver Portfólio</ViewButton>
                             </DevCard>
                         ))}
-                    </ResultsGrid>
+                    </Grid>
                     <Pagination>
                         {page !== 1 && <PageButton onClick={previousPage}>Página anterior</PageButton>}
                         {page < totalPages && <PageButton onClick={nextPage}>Próxima página</PageButton>}

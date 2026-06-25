@@ -44,3 +44,17 @@ export const Select = styled.select`
   color: ${theme.colors.text};
   font-size: 1rem;
 `
+
+export const Grid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: ${theme.spacing.lg};
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);  /* até 768px: 2 colunas (tablet) */
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;             /* até 480px: 1 coluna (mobile) */
+  }
+`

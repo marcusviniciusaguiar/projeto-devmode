@@ -8,12 +8,7 @@ import { useProjects } from "../contexts/ProjectContext";
 import { useAuth } from "../contexts/AuthContext";
 import CommentsSection from "../components/CommentsSection";
 import { useEffect } from "react";
-
-const Grid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: ${theme.spacing.lg};
-`
+import { Grid } from "../components/StyledComponents";
 
 const ProfileHeader = styled.div`
   display: flex;

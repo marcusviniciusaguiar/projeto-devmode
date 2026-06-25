@@ -1,15 +1,8 @@
-import styled from "styled-components";
 import { useFavorites } from "../contexts/FavoritesContext";
 import { useProjects } from "../contexts/ProjectContext";
-import { theme } from "../styles/theme";
 import ProjectCard from "../components/ProjectCard";
 import { useEffect } from "react";
-
-const Grid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: ${theme.spacing.lg};
-`
+import { Grid } from "../components/StyledComponents";
 
 function Favorites() {
     
