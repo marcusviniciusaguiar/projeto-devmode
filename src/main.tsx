@@ -9,15 +9,15 @@ import ToastProvider from './contexts/ToastContext.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <AuthProvider>
-      <ProjectProvider>
-        <FavoritesProvider>
-          <GlobalStyle />
-          <ToastProvider>
+    <ToastProvider>
+      <AuthProvider>
+        <ProjectProvider>
+          <FavoritesProvider>
+            <GlobalStyle />
             <App />
-          </ToastProvider>
-        </FavoritesProvider>
-      </ProjectProvider>
-    </AuthProvider>
+          </FavoritesProvider>
+        </ProjectProvider>
+      </AuthProvider>
+    </ToastProvider>
   </StrictMode>,
 )
