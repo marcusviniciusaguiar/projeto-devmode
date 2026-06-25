@@ -88,6 +88,12 @@ function ProjectForm({project, onSubmit}: ProjectFormProps) {
             return;
         }
 
+        
+        if(imageUrl && (!imageUrl.startsWith("http://") && !imageUrl.startsWith("https://"))) {
+            showToast('O link da foto deve começar com "http" ou "https"');
+            return;
+        }
+
         if(githubUrl && (!githubUrl.startsWith("http://") && !githubUrl.startsWith("https://"))) {
             showToast('O link do GitHub deve começar com "http" ou "https"');
             return;
@@ -95,11 +101,6 @@ function ProjectForm({project, onSubmit}: ProjectFormProps) {
 
         if(liveUrl && (!liveUrl.startsWith("http://") && !liveUrl.startsWith("https://"))) {
             showToast('A URL do projeto deve começar com "http" ou "https"');
-            return;
-        }
-
-        if(imageUrl && (!imageUrl.startsWith("http://") && !imageUrl.startsWith("https://"))) {
-            showToast('O link da foto deve começar com "http" ou "https"');
             return;
         }
 
